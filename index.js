@@ -14,7 +14,7 @@ app.use(cors());
 
 app.use('/posts',postRoutes);
 
-const CONNECTION_URL='mongodb+srv://varad1:varad123@cluster0.kf72x3g.mongodb.net/?retryWrites=true&w=majority';
+const CONNECTION_URL=process.env.REACT_APP_URL;
 const PORT=process.env.PORT||5000;
 
 mongoose.connect(CONNECTION_URL,{useNewUrlParser:"true",useUnifiedTopology:"true"})

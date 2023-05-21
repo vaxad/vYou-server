@@ -1,4 +1,6 @@
+import mongoose from 'mongoose';
 import Post from '../models/post.js'
+import { ObjectId } from 'mongodb';
 
 
 export const getPosts=async (req,res)=>{
@@ -21,3 +23,16 @@ export const createPosts=async (req,res)=>{
     }
 }
 
+export const updatePost=async (req,res)=>{
+    const {id:_id}=req.params
+    if(!mongoose.Types.ObjectId.isValid(_id)){
+        return res.status(404).send('no post with that id')
+    }
+    const post=req.body;
+    try {
+        const updatedPost = await postMessage.findByIdAndUpdate(_id,post,{new:true});
+        res.status(201).json(updatedPost);
+    } catch (error) {
+        res.status(409).json({error:error.message});
+    }
+}
