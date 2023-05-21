@@ -25,13 +25,27 @@ export const createPosts=async (req,res)=>{
 
 export const updatePost=async (req,res)=>{
     const {id:_id}=req.params
-    if(!mongoose.Types.ObjectId.isValid(_id)){
+    if(!mongoose.Types.ObjectId.isValid(req.params.id)){
         return res.status(404).send('no post with that id')
     }
     const post=req.body;
     try {
-        const updatedPost = await postMessage.findByIdAndUpdate(_id,post,{new:true});
+        const updatedPost = await Post.findByIdAndUpdate(_id,post,{new:true});
         res.status(201).json(updatedPost);
+    } catch (error) {
+        res.status(409).json({error:error.message});
+    }
+}
+
+export const deletePost=async (req,res)=>{
+    const {id:_id}=req.params
+    if(!mongoose.Types.ObjectId.isValid(req.params.id)){
+        return res.status(404).send('no post with that id')
+    }
+    try {
+        await Post.findByIdAndRemove(req.params.id);
+        //("hogya delete")
+        res.json('post deleted');
     } catch (error) {
         res.status(409).json({error:error.message});
     }
