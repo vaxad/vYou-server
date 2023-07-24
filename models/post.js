@@ -6,10 +6,7 @@ const postSchema=mongoose.Schema({
     creator:String,
     tags:[String],
     selectedFile:String,
-    likes:{
-        type:Number,
-        default:0
-    },
+    likes:[String],
     date:{
         type:Date,
         default: new Date()

@@ -1,13 +1,16 @@
 import express from 'express';
-import {getPosts, createPosts,updatePost, deletePost, likePost} from '../controllers/posts.js'
+import {getPosts, getPost, createPosts,updatePost, deletePost, likePost, dislikePost} from '../controllers/posts.js'
+import { fetchuser } from '../middleware/fetchuser.js';
 
 const router=express.Router();
 
-router.get('/',getPosts);
-router.post('/',createPosts);
-router.patch('/:id',updatePost);
-router.delete('/:id',deletePost);
-router.patch('/:id/likePost',likePost);
+router.get('/',fetchuser, getPosts);
+router.post('/',fetchuser, createPosts);
+router.get('/getpost/:id',fetchuser,getPost);
+router.patch('/:id',fetchuser,updatePost);
+router.delete('/:id',fetchuser,deletePost);
+router.patch('/likePost/:id',fetchuser,likePost);
+router.patch('/dislikePost/:id',fetchuser,dislikePost);
 
 export default router;
 
