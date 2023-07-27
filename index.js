@@ -20,6 +20,9 @@ app.use(cors(corsOptions)) // Use this after the variable declaration
 app.use('/posts',postRoutes);
 // app.use('/user',userRoutes);
 app.use('/auth',authRoutes);
+app.get("/", (req, res) => {
+   res.send("Server is working");
+ });
 
 const CONNECTION_URL=process.env.REACT_APP_URL;
 const PORT=process.env.PORT||5000;
