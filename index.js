@@ -1,15 +1,18 @@
 import dotenv from "dotenv";
 dotenv.config({path: '.env.local'});
 import express from "express";
+import cookieParser from "cookie-parser";
 import mongoose from "mongoose";
 import postRoutes from './routes/posts.js';
 import authRoutes from './routes/auth.js';
 import cors from 'cors';
 
-const app=express();
+export const app=express();
 
 app.use(express.json());
-app.use(cors()) // Use this after the variable declaration
+app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
+app.use(cors()) 
 
 app.use('/posts',postRoutes);
 app.use('/auth',authRoutes);
