@@ -3,7 +3,7 @@ import User from '../models/User.js';
 const router=express.Router();
 import { body, validationResult } from 'express-validator';
 import bcrypt from 'bcryptjs';
-const JWT_SECRET='varadkasignature';
+const JWT_SECRET=process.env.JWT_SECRET;
 import jwt from 'jsonwebtoken';
 import { fetchuser } from '../middleware/fetchuser.js';
 

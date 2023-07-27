@@ -1,6 +1,6 @@
 
 import jwt from 'jsonwebtoken';
-const JWT_SECRET='varadkasignature';
+const JWT_SECRET=process.env.JWT_SECRET;
 
 export const fetchuser=(req,res,next)=>{
 
