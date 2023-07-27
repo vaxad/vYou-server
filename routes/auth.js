@@ -9,7 +9,7 @@ import { fetchuser } from '../middleware/fetchuser.js';
 
 let success=false;
 //ROUTE 1: create a user using: POST '/api/auth'
-router.post('/createuser', [
+router.post('/', [
     body('email','enter a valid email').isEmail(),
     body('name','enter a valid name').isString(),
     body('password','enter a valid password').isLength({min:5})
@@ -91,7 +91,7 @@ router.post('/login', [
 
 //ROUTE 2: create a user using: POST '/api/getuser'
 
-router.get('/getme',fetchuser, async (req,res)=>{
+router.get('/me',fetchuser, async (req,res)=>{
 try {
     const userId=req.user.id;
     const user=await User.findById(userId).select("-password");
@@ -103,7 +103,7 @@ try {
 }
 })
 
-router.get('/:id/getuser', async (req,res)=>{
+router.get('/:id', async (req,res)=>{
     try {
         const userId=req.params.id;
         const user=await User.findById(userId).select("-password");

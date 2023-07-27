@@ -2,7 +2,6 @@ import bodyParser from "body-parser";
 import express from "express";
 import cors from "cors"
 import mongoose from "mongoose";
-import userRoutes from './routes/users.js';
 import postRoutes from './routes/posts.js';
 import authRoutes from './routes/auth.js';
 
@@ -20,7 +19,7 @@ const corsOptions ={
 app.use(cors(corsOptions)) // Use this after the variable declaration
 
 app.use('/posts',postRoutes);
-app.use('/user',userRoutes);
+// app.use('/user',userRoutes);
 app.use('/auth',authRoutes);
 
 const CONNECTION_URL=process.env.REACT_APP_URL;

@@ -16,7 +16,7 @@ const userSchema = new Schema({
         required:true
     },
     posts:[{
-        type:JSON
+        type:String
     }],
     date:{
         type:Date,

@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import Post from '../models/post.js'
+import Post from '../models/Post.js'
 import { ObjectId } from 'mongodb';
 import { fetchuser } from '../middleware/fetchuser.js';
 import User from '../models/User.js';
@@ -15,16 +15,20 @@ export const getPosts=async (req,res)=>{
 }
 
 export const createPosts=async (req,res)=>{
-    console.log(req.body)
+    //.log(req.body)
     const id=req.user.id;
     const body=req.body;
     const newPost=new Post(body);
     const user=await User.findById(id);
-    user.posts.push(newPost);
+    newPost.creator_id=user._id;
+    newPost.creator=user.name;
+    const post=await Post.create(newPost);
+    //console.log(post._id);
     try {
-        await user.save()
-        await newPost.save();
-        res.status(201).json(newPost);
+        await post.save();
+        user.posts.push(post._id);
+        user.save();
+        res.status(201).json(post);
     } catch (error) {
         res.status(409).json({error:error.message});
     }
@@ -45,10 +49,15 @@ export const getPost=async (req,res)=>{
 
 export const updatePost=async (req,res)=>{
     const {id:_id}=req.params
+    const userId=req.user.id;
     if(!mongoose.Types.ObjectId.isValid(req.params.id)){
         return res.status(404).send('no post with that id')
     }
     const post=req.body;
+    const ogPost= await Post.findById(req.params.id);
+    if(ogPost.creator_id!==userId){
+        return res.status(401).send('Unauthorized');
+    }else{
     try {
         const updatedPost = await Post.findByIdAndUpdate(req.params.id,post,{new:true});
         res.status(201).json(updatedPost);
@@ -56,12 +65,18 @@ export const updatePost=async (req,res)=>{
         res.status(409).json({error:error.message});
     }
 }
+}
 
 export const deletePost=async (req,res)=>{
     const {id:_id}=req.params
+    const userId=req.user.id;
     if(!mongoose.Types.ObjectId.isValid(req.params.id)){
         return res.status(404).send('no post with that id')
     }
+    const ogPost=await Post.findById(req.params.id);
+    if(ogPost.creator_id!==userId){
+        return res.status(401).send('Unauthorized');
+    }else{
     try {
         await Post.findByIdAndRemove(req.params.id);
         //("hogya delete")
@@ -69,6 +84,7 @@ export const deletePost=async (req,res)=>{
     } catch (error) {
         res.status(409).json({error:error.message});
     }
+}
 }
 
 export const likePost=async (req,res)=>{
