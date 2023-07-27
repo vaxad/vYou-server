@@ -1,7 +1,5 @@
 import mongoose from 'mongoose';
-import Post from '../models/Post.js'
-import { ObjectId } from 'mongodb';
-import { fetchuser } from '../middleware/fetchuser.js';
+import Post from '../models/Post.js';
 import User from '../models/User.js';
 
 
