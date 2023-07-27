@@ -16,7 +16,7 @@ app.use(cors())
 
 app.use('/posts',postRoutes);
 app.use('/auth',authRoutes);
-app.get("/", (req, res) => {
+app.get('/', (req, res) => {
    res.send("Server is working");
  });
 
