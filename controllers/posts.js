@@ -14,7 +14,7 @@ export const getPosts=async (req,res)=>{
 
 export const createPosts=async (req,res)=>{
     //.log(req.body)
-    // res.set('Access-Control-Allow-Origin', '*');
+    res.set('Access-Control-Allow-Origin', '*');
     const id=req.user.id;
     const body=req.body;
     const newPost=new Post(body);

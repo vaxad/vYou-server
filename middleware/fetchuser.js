@@ -4,7 +4,7 @@ import jwt from 'jsonwebtoken';
 const JWT_SECRET=process.env.JWT_SECRET;
 
 export const fetchuser=(req,res,next)=>{
-
+    res.set('Access-Control-Allow-Origin', '*');
     try{
     const token=req.header('auth-token');
     if(!token){
