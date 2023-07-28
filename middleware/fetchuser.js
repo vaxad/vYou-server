@@ -14,7 +14,8 @@ export const fetchuser=(req,res,next)=>{
     req.user=data.user;
     next();
 }catch(error){
-    res.status(401).send('Unauthorized');
+    res.status(401).send(error);
+    
 }
 }
 
